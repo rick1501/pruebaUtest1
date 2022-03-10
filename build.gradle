@@ -1,0 +1,39 @@
+version '1.0-SNAPSHOT'
+repositories {
+    jcenter()
+    mavenLocal()
+}
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.1.2")
+    }
+}
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'net.serenity-bdd.aggregator'
+dependencies {
+    testCompile 'net.serenity-bdd:serenity-core:2.1.2'
+    testCompile 'net.serenity-bdd:serenity-junit:2.1.2'
+    compile group: 'net.serenity-bdd', name: 'serenity-cucumber', version: '1.9.51'
+    compile group: 'net.serenity-bdd', name: 'serenity-screenplay-webdriver', version: '2.1.2'
+    compile group: 'net.serenity-bdd', name: 'serenity-screenplay', version: '2.1.2'
+    testCompile('junit:junit:4.12')
+    compile group: 'net.serenity-bdd', name: 'serenity-core', version: '2.1.2'
+    compile group: 'net.serenity-bdd', name: 'serenity-junit', version: '2.1.2'
+    testCompile('org.slf4j:slf4j-simple:1.7.7')
+}
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+
+}
+tasks.withType(Test) {
+    systemProperties = System.properties
+    maxParallelForks = Runtime.runtime.availableProcessors()
+}
+gradle.startParameter.continueOnFailure = true
+
